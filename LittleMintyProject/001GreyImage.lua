@@ -34,7 +34,7 @@ function main()
 	data = createImage(data , width , height)
 	assert(data.done)
 	local binary = table.concat(data.output)
-	local file = assert(io.open("results/GreImage.png" , "wb"))
+	local file = assert(io.open("results/" .. "001.png" , "wb"))
 	file:write(binary)
 	file:close()
 	return

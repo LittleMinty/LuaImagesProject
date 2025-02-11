@@ -2,38 +2,9 @@ local Png = {}
 Png.__index = Png
 
 local DEFLATE_MAX_BLOCK_SIZE = 65535
-require("bit")
-if bit32 then -- lua5.2, luajit compatiable, luajit has bit, lua5.2 has bit32
-  bit = bit32
-elseif not bit then
-  -- lua5.3+ use bitwise operator
-  bit = load(
-  [[
-    local function to32bit(n)
-      return n & 0xFFFFFFFF
-    end
-    local t = {
-    band = function(a, b)
-      return to32bit(a & b)
-    end,
-    bor = function(a, b)
-      return to32bit(a | b)
-    end,
-    bxor = function(a, b)
-      return to32bit(a ~ b)
-    end,
-    bnot = function(a)
-      return to32bit(~a)
-    end,
-    lshift = function(a, b)
-      return to32bit(a << b)
-    end,
-    rshift = function(a, b)
-      return to32bit(a >> b)
-    end,
-    }
-    return t
-  ]])()
+local bit 
+if not bit then
+  bit = require("bit")
 end
 
 local function putBigUint32(val, tbl, index)
